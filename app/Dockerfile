@@ -8,6 +8,7 @@ COPY default.conf.template /etc/nginx/templates/default.conf.template
 COPY start.sh /usr/local/bin/railway-start.sh
 RUN chmod 755 /usr/local/bin/railway-start.sh
 
-ENV PORT=8080
+ENV PORT=8080 \
+    WEBDAV_SYNC_FOLDER_PATH=super-productivity
 EXPOSE 8080
 ENTRYPOINT ["/usr/local/bin/railway-start.sh"]
