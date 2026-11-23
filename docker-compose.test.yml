@@ -1,0 +1,22 @@
+# Local test of the Railway layout (not used by Railway).
+services:
+  webdav:
+    build: ./webdav
+    environment:
+      WEBDAV_USERNAME: sync
+      WEBDAV_PASSWORD: local-test-password-only
+    volumes:
+      - webdav_data:/data
+  app:
+    build: ./app
+    depends_on: [webdav]
+    ports:
+      - "18080:8080"
+    environment:
+      PORT: "8080"
+      WEBDAV_HOST: webdav
+      WEBDAV_PORT: "8080"
+      WEBDAV_USERNAME: sync
+      WEBDAV_BASE_URL: http://localhost:18080/webdav/
+volumes:
+  webdav_data:

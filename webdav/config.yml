@@ -1,0 +1,29 @@
+# hacdias/webdav v5 configuration for Railway.
+# "[::]" listens on IPv4 and IPv6 (Railway's private network is IPv6).
+address: "[::]"
+port: 8080
+# Served under /webdav/ on the app's domain (nginx passes the path unchanged,
+# so PROPFIND links stay correct).
+prefix: /webdav/
+behindProxy: true
+noSniff: true
+debug: false
+
+directory: /data
+permissions: CRUD
+
+log:
+  format: console
+  colors: false
+  outputs:
+    - stderr
+
+# The web app reaches WebDAV through its own domain (/webdav/), so no CORS.
+cors:
+  enabled: false
+
+# One user, from Railway variables. A generated password is required: the
+# server refuses to start if either variable is empty.
+users:
+  - username: "{env}WEBDAV_USERNAME"
+    password: "{env}WEBDAV_PASSWORD"
